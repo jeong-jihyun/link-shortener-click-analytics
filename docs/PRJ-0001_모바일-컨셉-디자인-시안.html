@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f3"><title>예약·결제 미니 사이트 빌더 | 모바일 컨셉</title>
+<style>
+:root{--bg:#f5f6f3;--surface:#fff;--ink:#202a28;--muted:#75817d;--line:#e3e8e4;--primary:#315e56;--dark:#24463f;--accent:#d9a86c;--good:#2e7d5b;--warn:#b7791f;--bad:#b54747;--r:18px}
+*{box-sizing:border-box}body{margin:0;background:#e9eeea;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:430px;min-height:100dvh;margin:auto;background:var(--bg);position:relative;box-shadow:0 0 40px #1b2a2418;padding-bottom:88px}
+.top{height:62px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(245,246,243,.94);position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);border-bottom:1px solid #e8ece8}
+.brand{font-weight:800;letter-spacing:-.5px}.brand span{color:var(--primary)}.avatar{width:34px;height:34px;border-radius:50%;background:#dce8e2;color:var(--primary);display:grid;place-items:center;font-weight:700}
+main{padding:22px 20px 24px}.eyebrow{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1.1px;text-transform:uppercase}.heading{font-size:25px;letter-spacing:-.8px;margin:7px 0 5px;font-weight:800}.sub{font-size:13px;color:var(--muted);line-height:1.55}.section{margin-top:25px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.section-head h2{font-size:16px;margin:0;letter-spacing:-.3px}.link{border:0;background:none;color:var(--primary);font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:0 5px 16px #20352b08}.metric{font-size:25px;font-weight:800;letter-spacing:-.8px;margin:10px 0 3px}.metric-label{font-size:12px;color:var(--muted)}.metric-foot{font-size:10px;color:var(--good);margin-top:8px}
+.primary{background:var(--primary);color:white;border:0;border-radius:14px;padding:14px 16px;font-weight:700;min-height:48px}.primary:active{background:var(--dark)}.secondary{background:#edf2ef;color:var(--primary);border:1px solid #dce6e0;border-radius:13px;padding:12px 14px;font-weight:700;min-height:44px}.ghost{background:none;border:0;color:var(--muted);padding:8px}
+.actions{display:flex;gap:9px}.actions>*{flex:1}.row{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}.list{display:flex;flex-direction:column;gap:9px}.item{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--line);border-radius:15px;padding:13px}.time{font-size:12px;font-weight:800;color:var(--primary);min-width:48px}.item-title{font-size:13px;font-weight:700}.item-sub{font-size:11px;color:var(--muted);margin-top:4px}.chip{font-size:10px;font-weight:700;padding:6px 8px;border-radius:30px;background:#fff3df;color:var(--warn);white-space:nowrap}.chip.good{background:#e7f3eb;color:var(--good)}.chip.bad{background:#fae9e8;color:var(--bad)}.chip.neutral{background:#edf0ee;color:#68736e}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:calc(72px + env(safe-area-inset-bottom));padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:#ffffffed;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:10;backdrop-filter:blur(14px)}
+.tab{border:0;background:none;color:#87918c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px}.tab b{font-size:19px;font-weight:500}.tab.active{color:var(--primary);font-weight:800}.tab.active b{font-weight:800}
+.view{display:none}.view.active{display:block}.form{display:flex;flex-direction:column;gap:14px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:13px 12px;outline:none;color:var(--ink)}.field textarea{min-height:86px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #315e5615}.hint{font-size:10px;color:var(--muted);margin-top:5px}.pill-row{display:flex;gap:7px;overflow:auto;padding-bottom:3px}.pill{border:1px solid var(--line);border-radius:30px;background:white;padding:9px 13px;font-size:11px;white-space:nowrap}.pill.selected{background:var(--primary);border-color:var(--primary);color:white}
+.site-preview{background:linear-gradient(140deg,#dfe9e2,#f8eee1);border-radius:18px;padding:20px;min-height:145px;display:flex;flex-direction:column;justify-content:space-between}.site-preview h3{font-size:22px;max-width:220px;margin:8px 0}.site-preview p{font-size:11px;color:#5f6d65}.mini-tag{font-size:10px;letter-spacing:1px;color:var(--primary);font-weight:800}
+.bar{height:7px;background:#edf1ee;border-radius:10px;overflow:hidden;margin-top:9px}.bar i{display:block;height:100%;background:var(--primary);border-radius:10px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.day{padding:9px 0;font-size:11px;border-radius:10px;background:white;border:1px solid var(--line)}.day.muted{opacity:.35}.day.selected{background:var(--primary);color:white;border-color:var(--primary)}.slot{padding:12px 8px;border-radius:11px;border:1px solid var(--line);background:white;font-size:11px}.slot.selected{background:#e8f1ec;border:1px solid var(--primary);color:var(--primary);font-weight:800}
+.notice{background:#f8f0e3;border:1px solid #f0e1c8;border-radius:13px;padding:12px;font-size:11px;color:#775a31;line-height:1.5}.divider{height:1px;background:var(--line);margin:15px 0}.large-number{font-size:30px;font-weight:800;letter-spacing:-1px}.back{border:0;background:none;font-size:13px;color:var(--primary);font-weight:700;padding:0 0 14px}.hidden{display:none!important}.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#202a28;color:white;padding:11px 16px;border-radius:30px;font-size:12px;z-index:30;opacity:0;transition:.2s;pointer-events:none}.toast.show{opacity:1}
+@media(min-width:600px){body{padding:24px 0}.shell{border-radius:28px;overflow:hidden;min-height:850px}.bottom{bottom:24px;border-radius:0 0 28px 28px}}
+</style></head>
+<body><div class="shell">
+<header class="top"><div class="brand">M<span>oment</span> · 예약 운영</div><div class="avatar">J</div></header>
+<main>
+<section id="home" class="view active">
+<div class="eyebrow">FRIDAY, NOVEMBER 27</div><div class="heading">좋은 아침이에요.</div><div class="sub">오늘의 예약과 운영 현황을 확인하세요.</div>
+<div class="grid section">
+<div class="card"><div class="metric-label">오늘 예약</div><div class="metric">12건</div><div class="metric-foot">전일 대비 +3건</div></div>
+<div class="card"><div class="metric-label">예약 확인 필요</div><div class="metric">3건</div><div class="metric-foot" style="color:var(--warn)">확인 후 확정하세요</div></div>
+<div class="card"><div class="metric-label">이번 달 결제 완료</div><div class="metric">₩2.48M</div><div class="metric-foot">샘플 데이터</div></div>
+<div class="card"><div class="metric-label">운영 중인 사이트</div><div class="metric">2개</div><div class="metric-foot">1개 공개 · 1개 초안</div></div></div>
+<div class="section"><div class="section-head"><h2>빠른 작업</h2></div><div class="actions"><button class="primary" onclick="go('sites');openSub('createSite')">＋ 사이트 만들기</button><button class="secondary" onclick="go('reservations')">예약 확인</button></div></div>
+<div class="section"><div class="section-head"><h2>오늘의 예약</h2><button class="link" onclick="go('reservations')">전체 보기 →</button></div>
+<div class="list">
+<div class="item"><div class="time">10:00</div><div style="flex:1"><div class="item-title">김서연 · 퍼스널 컨설팅</div><div class="item-sub">60분 · 1명 · R-1127-008</div></div><span class="chip good">확정</span></div>
+<div class="item"><div class="time">11:30</div><div style="flex:1"><div class="item-title">박민준 · 첫 방문 상담</div><div class="item-sub">30분 · 1명 · R-1127-009</div></div><span class="chip">대기</span></div>
+<div class="item"><div class="time">14:00</div><div style="flex:1"><div class="item-title">이하늘 · 공간 대여</div><div class="item-sub">120분 · 4명 · R-1127-010</div></div><span class="chip good">확정</span></div></div></div>
+<div class="section card"><div class="row between"><div><div class="eyebrow">SITE STATUS</div><div style="font-weight:800;margin-top:6px">Moment Studio</div><div class="item-sub">moment.example.com</div></div><span class="chip good">공개 중</span></div><div class="divider"></div><div class="row between"><span class="sub">이번 달 방문</span><b>1,284</b></div><div class="bar"><i style="width:72%"></i></div></div>
+</section>
+
+<section id="sites" class="view">
+<div class="eyebrow">YOUR STOREFRONT</div><div class="heading">내 사이트</div><div class="sub">예약을 받을 미니 사이트를 만들고 관리하세요.</div>
+<div class="section actions"><button class="primary" onclick="openSub('createSite')">＋ 새 사이트 만들기</button></div>
+<div class="section list">
+<div class="card"><div class="site-preview"><div class="mini-tag">MOMENT STUDIO</div><div><h3>당신의 순간을<br>더 특별하게</h3><p>상담 · 클래스 · 공간 예약</p></div></div><div class="row between" style="margin-top:13px"><div><b style="font-size:13px">Moment Studio</b><div class="item-sub">moment.example.com</div></div><span class="chip good">공개 중</span></div><div class="actions" style="margin-top:12px"><button class="secondary" onclick="openSub('editSite')">편집</button><button class="secondary" onclick="toast('공개 URL이 복사된 것으로 시연합니다.')">URL 복사</button></div></div>
+<div class="card"><div class="row between"><b>온유 클래스</b><span class="chip neutral">초안</span></div><div class="item-sub">아직 공개되지 않은 사이트</div><div class="actions" style="margin-top:14px"><button class="secondary" onclick="openSub('editSite')">계속 편집</button><button class="secondary" onclick="toast('미리보기 화면 연결 예정')">미리보기</button></div></div>
+</div>
+</section>
+
+<section id="reservations" class="view">
+<div class="eyebrow">BOOKING MANAGEMENT</div><div class="heading">예약 관리</div><div class="sub">예약 상태와 고객 요청을 확인하세요.</div>
+<div class="section pill-row"><button class="pill selected" onclick="filterReservations(this,'all')">전체 12</button><button class="pill" onclick="filterReservations(this,'wait')">대기 3</button><button class="pill" onclick="filterReservations(this,'ok')">확정 8</button><button class="pill" onclick="filterReservations(this,'cancel')">취소 1</button></div>
+<div class="section list" id="reservationList">
+<div class="item" data-status="wait" onclick="openSub('reservationDetail')"><div class="time">11:30</div><div style="flex:1"><div class="item-title">박민준 · 첫 방문 상담</div><div class="item-sub">오늘 · 30분 · ₩35,000</div></div><span class="chip">대기</span></div>
+<div class="item" data-status="ok" onclick="openSub('reservationDetail')"><div class="time">10:00</div><div style="flex:1"><div class="item-title">김서연 · 퍼스널 컨설팅</div><div class="item-sub">오늘 · 60분 · ₩80,000</div></div><span class="chip good">확정</span></div>
+<div class="item" data-status="ok" onclick="openSub('reservationDetail')"><div class="time">14:00</div><div style="flex:1"><div class="item-title">이하늘 · 공간 대여</div><div class="item-sub">오늘 · 120분 · ₩120,000</div></div><span class="chip good">확정</span></div>
+<div class="item" data-status="cancel" onclick="openSub('reservationDetail')"><div class="time">16:00</div><div style="flex:1"><div class="item-title">최도윤 · 그룹 클래스</div><div class="item-sub">내일 · 90분 · ₩45,000</div></div><span class="chip bad">취소</span></div>
+</div></section>
+
+<section id="payments" class="view">
+<div class="eyebrow">PAYMENT OVERVIEW</div><div class="heading">결제 관리</div><div class="sub">결제 상태와 거래 내역을 확인하세요.</div>
+<div class="card section"><div class="metric-label">이번 달 결제 완료 금액</div><div class="large-number" style="margin:8px 0">₩2,480,000</div><div class="row between"><span class="sub">결제 42건 · 환불 2건</span><span class="chip good">정산 확인</span></div></div>
+<div class="section pill-row"><button class="pill selected" onclick="filterPayments(this,'all')">전체</button><button class="pill" onclick="filterPayments(this,'paid')">완료</button><button class="pill" onclick="filterPayments(this,'pending')">대기</button><button class="pill" onclick="filterPayments(this,'refund')">환불</button></div>
+<div class="section list" id="paymentList">
+<div class="item" data-payment="paid"><div style="flex:1"><div class="item-title">R-1127-008 · 퍼스널 컨설팅</div><div class="item-sub">오늘 09:42 · 카드 결제</div></div><div style="text-align:right"><b>₩80,000</b><div class="item-sub" style="color:var(--good)">결제 완료</div></div></div>
+<div class="item" data-payment="pending"><div style="flex:1"><div class="item-title">R-1127-009 · 첫 방문 상담</div><div class="item-sub">오늘 09:51 · 결제 링크</div></div><div style="text-align:right"><b>₩35,000</b><div class="item-sub" style="color:var(--warn)">결제 대기</div></div></div>
+<div class="item" data-payment="refund"><div style="flex:1"><div class="item-title">R-1126-021 · 그룹 클래스</div><div class="item-sub">11월 26일 · 카드 결제</div></div><div style="text-align:right"><b>₩45,000</b><div class="item-sub" style="color:var(--muted)">환불 완료</div></div></div>
+</div><div class="notice section">결제 금액과 거래 상태는 화면 시연용 샘플입니다. 실제 승인·취소·환불은 PG 연동 및 서버 검증이 필요합니다.</div>
+</section>
+
+<section id="settings" class="view">
+<div class="eyebrow">WORKSPACE SETTINGS</div><div class="heading">운영 설정</div><div class="sub">예약 운영에 필요한 기본 정보를 관리하세요.</div>
+<div class="section list">
+<div class="item" onclick="openSub('serviceSettings')"><div style="flex:1"><div class="item-title">서비스 및 가격</div><div class="item-sub">서비스명, 금액, 소요시간</div></div><b>›</b></div>
+<div class="item" onclick="openSub('hoursSettings')"><div style="flex:1"><div class="item-title">영업시간 및 휴무일</div><div class="item-sub">요일별 운영 시간 설정</div></div><b>›</b></div>
+<div class="item" onclick="openSub('policySettings')"><div style="flex:1"><div class="item-title">예약 및 취소 정책</div><div class="item-sub">사전 예약, 취소 가능 기간</div></div><b>›</b></div>
+<div class="item" onclick="openSub('paymentSettings')"><div style="flex:1"><div class="item-title">결제 설정</div><div class="item-sub">PG 연결 상태 및 결제 방식</div></div><b>›</b></div>
+<div class="item" onclick="toast('알림 설정은 후속 기능입니다.')"><div style="flex:1"><div class="item-title">알림 설정</div><div class="item-sub">예약·결제 알림 채널</div></div><b>›</b></div>
+</div><div class="section card"><div class="row between"><b style="font-size:13px">워크스페이스</b><span class="chip neutral">Owner</span></div><div class="item-sub">Moment Studio · 운영자 계정</div></div>
+</section>
+
+<!-- Sub screens -->
+<section id="createSite" class="view"><button class="back" onclick="go('sites')">← 사이트 목록</button><div class="heading">새 사이트 만들기</div><div class="sub">고객이 예약할 페이지의 기본 정보를 입력하세요.</div><form class="form section" onsubmit="event.preventDefault();toast('사이트 초안이 브라우저에서 생성된 것으로 시연합니다.');go('sites')">
+<div class="field"><label>사이트 이름 *</label><input required placeholder="예: Moment Studio"></div>
+<div class="field"><label>업종</label><select><option>상담 / 컨설팅</option><option>클래스 / 교육</option><option>공간 대여</option><option>뷰티 / 웰니스</option><option>기타 서비스</option></select></div>
+<div class="field"><label>공개 주소 *</label><input required placeholder="moment-studio"><div class="hint">영문 소문자, 숫자, 하이픈 사용</div></div>
+<div class="field"><label>대표 서비스</label><input placeholder="예: 퍼스널 컨설팅"></div>
+<div class="field"><label>고객 문의 연락처</label><input placeholder="010-0000-0000"></div>
+<button class="primary" type="submit">사이트 초안 만들기</button></form></section>
+
+<section id="editSite" class="view"><button class="back" onclick="go('sites')">← 사이트 목록</button><div class="heading">사이트 편집</div><div class="sub">고객에게 보여줄 페이지 콘텐츠를 관리하세요.</div><div class="section site-preview"><div class="mini-tag">SITE PREVIEW</div><div><h3>당신의 순간을<br>더 특별하게</h3><p>상담 · 클래스 · 공간 예약</p></div></div>
+<form class="form section" onsubmit="event.preventDefault();toast('변경 내용을 임시 저장했습니다.')">
+<div class="field"><label>사이트 제목</label><input value="Moment Studio"></div><div class="field"><label>한 줄 소개</label><input value="당신의 순간을 더 특별하게"></div><div class="field"><label>상세 소개</label><textarea>전문가와 함께하는 맞춤형 상담과 클래스</textarea></div><div class="field"><label>대표 서비스</label><input value="퍼스널 컨설팅"></div><div class="field"><label>서비스 가격 (원)</label><input type="number" value="80000"></div><button class="primary">변경 사항 저장</button></form></section>
+
+<section id="reservationDetail" class="view"><button class="back" onclick="go('reservations')">← 예약 목록</button><div class="heading">예약 상세</div><div class="row between section"><b>R-1127-009</b><span class="chip">예약 대기</span></div><div class="card section"><div class="eyebrow">CUSTOMER</div><h2 style="font-size:18px;margin:8px 0">박민준</h2><div class="sub">010-1234-5678</div><div class="divider"></div><div class="row between"><span class="sub">서비스</span><b>첫 방문 상담</b></div><div class="row between" style="margin-top:12px"><span class="sub">예약 일시</span><b>11월 27일 11:30</b></div><div class="row between" style="margin-top:12px"><span class="sub">결제 금액</span><b>₩35,000</b></div><div class="row between" style="margin-top:12px"><span class="sub">결제 상태</span><span class="chip">결제 대기</span></div><div class="divider"></div><div class="sub">요청사항: 첫 방문이라 상담 절차를 안내받고 싶습니다.</div></div><div class="actions section"><button class="secondary" onclick="toast('취소 확인 단계가 필요합니다.')">예약 취소</button><button class="primary" onclick="toast('예약 확정 요청을 시연했습니다.')">예약 확정</button></div></section>
+
+<section id="serviceSettings" class="view"><button class="back" onclick="go('settings')">← 설정</button><div class="heading">서비스 및 가격</div><form class="form section" onsubmit="event.preventDefault();toast('서비스 설정을 임시 저장했습니다.')"><div class="field"><label>서비스명</label><input value="퍼스널 컨설팅"></div><div class="field"><label>가격 (원)</label><input type="number" value="80000"></div><div class="field"><label>소요시간</label><select><option>60분</option><option>30분</option><option>90분</option><option>120분</option></select></div><div class="field"><label>예약 가능</label><select><option>사용</option><option>중지</option></select></div><button class="primary">저장</button></form></section>
+<section id="hoursSettings" class="view"><button class="back" onclick="go('settings')">← 설정</button><div class="heading">영업시간</div><form class="form section"><div class="field"><label>운영 요일</label><div class="pill-row"><button type="button" class="pill selected">월</button><button type="button" class="pill selected">화</button><button type="button" class="pill selected">수</button><button type="button" class="pill selected">목</button><button type="button" class="pill selected">금</button><button type="button" class="pill">토</button><button type="button" class="pill">일</button></div></div><div class="grid"><div class="field"><label>시작</label><input type="time" value="09:00"></div><div class="field"><label>종료</label><input type="time" value="18:00"></div></div><button type="button" class="primary" onclick="toast('영업시간 설정을 임시 저장했습니다.')">저장</button></form></section>
+<section id="policySettings" class="view"><button class="back" onclick="go('settings')">← 설정</button><div class="heading">예약 정책</div><form class="form section"><div class="field"><label>최소 사전 예약</label><select><option>1시간 전</option><option>3시간 전</option><option>하루 전</option></select></div><div class="field"><label>예약 가능 기간</label><select><option>30일 이내</option><option>14일 이내</option><option>60일 이내</option></select></div><div class="field"><label>취소 가능 기준</label><select><option>예약 24시간 전까지</option><option>예약 48시간 전까지</option><option>취소 불가</option></select></div><button type="button" class="primary" onclick="toast('정책을 임시 저장했습니다.')">저장</button></form></section>
+<section id="paymentSettings" class="view"><button class="back" onclick="go('settings')">← 설정</button><div class="heading">결제 설정</div><div class="card section"><div class="row between"><b>PG 연동</b><span class="chip neutral">미연결</span></div><p class="sub">실제 결제를 받으려면 PG 가맹점 계약, 서버 키 설정, 승인/웹훅 검증 구현이 필요합니다.</p><button class="secondary" onclick="toast('PG사 및 계약 조건 확정 후 연결할 수 있습니다.')">연동 준비 항목 보기</button></div><div class="notice section">이 컨셉 화면은 실제 결제 요청을 전송하지 않습니다.</div></section>
+
+<section id="customerBooking" class="view"><button class="back" onclick="go('home')">← 운영 화면</button><div class="eyebrow">CUSTOMER PREVIEW</div><div class="heading">예약 페이지 미리보기</div><div class="sub">고객이 보게 될 예약 흐름입니다.</div><div class="card section"><div class="site-preview"><div class="mini-tag">MOMENT STUDIO</div><div><h3>당신의 순간을<br>더 특별하게</h3><p>상담 · 클래스 · 공간 예약</p></div></div><h2 style="font-size:17px;margin:18px 0 5px">퍼스널 컨설팅</h2><div class="row between"><span class="sub">전문가 1:1 맞춤 상담 · 60분</span><b>₩80,000</b></div></div>
+<div class="section"><div class="section-head"><h2>날짜 선택</h2><span class="sub">2026년 12월</span></div><div class="calendar" id="calendar"></div></div>
+<div class="section"><div class="section-head"><h2>시간 선택</h2><span class="sub">가능한 시간</span></div><div class="grid" id="slots"><button class="slot" onclick="selectSlot(this)">10:00</button><button class="slot" onclick="selectSlot(this)">11:30</button><button class="slot" onclick="selectSlot(this)">13:00</button><button class="slot" onclick="selectSlot(this)">14:30</button></div></div>
+<form class="form section" onsubmit="event.preventDefault();toast('예약 요청이 접수된 것으로 시연합니다. 실제 서버/PG 미연결');go('home')"><div class="field"><label>예약자 이름 *</label><input required placeholder="이름 입력"></div><div class="field"><label>휴대폰 번호 *</label><input required type="tel" placeholder="010-0000-0000"></div><div class="field"><label>요청사항</label><textarea placeholder="요청사항을 입력하세요."></textarea></div><label style="font-size:11px"><input type="checkbox" required> 예약 정책 및 개인정보 처리 안내에 동의합니다.</label><button class="primary">예약 요청하기</button></form>
+</section>
+</main>
+<nav class="bottom" id="bottomNav">
+<button class="tab active" data-go="home" onclick="go('home')"><b>⌂</b>홈</button>
+<button class="tab" data-go="sites" onclick="go('sites')"><b>▣</b>사이트</button>
+<button class="tab" data-go="reservations" onclick="go('reservations')"><b>▤</b>예약</button>
+<button class="tab" data-go="payments" onclick="go('payments')"><b>₩</b>결제</button>
+<button class="tab" data-go="settings" onclick="go('settings')"><b>⚙</b>설정</button>
+</nav><div class="toast" id="toast"></div></div>
+<script>
+const topTabs=['home','sites','reservations','payments','settings'];
+function go(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.go===id));document.getElementById('bottomNav').classList.toggle('hidden',!topTabs.includes(id));window.scrollTo({top:0,behavior:'smooth'});}
+function openSub(id){go(id)}
+let toastTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
+function filterReservations(btn,status){btn.parentElement.querySelectorAll('.pill').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');document.querySelectorAll('#reservationList .item').forEach(x=>x.classList.toggle('hidden',status!=='all'&&x.dataset.status!==status))}
+function filterPayments(btn,status){btn.parentElement.querySelectorAll('.pill').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');document.querySelectorAll('#paymentList .item').forEach(x=>x.classList.toggle('hidden',status!=='all'&&x.dataset.payment!==status))}
+function selectSlot(btn){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')}
+const cal=document.getElementById('calendar');['일','월','화','수','목','금','토'].forEach(x=>{let e=document.createElement('div');e.className='eyebrow';e.textContent=x;cal.append(e)});for(let i=1;i<=31;i++){let e=document.createElement('button');e.className='day'+(i<1?' muted':'');e.textContent=i;e.onclick=()=>{document.querySelectorAll('.day').forEach(x=>x.classList.remove('selected'));e.classList.add('selected')};if(i===1)e.classList.add('selected');cal.append(e)}
+</script></body></html>
